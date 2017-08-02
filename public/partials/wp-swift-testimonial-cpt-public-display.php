@@ -27,8 +27,9 @@ if ( have_posts() ) : ?>
     while ( have_posts() ) : the_post(); ?>
     
         <div class="testimonial">
-            <h4 class="testimonial-header"><?php the_title() ?></h4>
             <div class="testimonial-content"><?php the_content();?></div>
+            <h5 class="testimonial-header"><?php the_title() ?></h5>
+            <div class="clearfix"></div>
         </div>
 
         <?php 

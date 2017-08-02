@@ -121,7 +121,7 @@ class Wp_Swift_Testimonial_Cpt_Public {
 	 *
 	 * @since    1.0.0
 	 */
-	// public function enqueue_scripts() {
+	public function enqueue_scripts() {
 
 		/**
 		 * This function is provided for demonstration purposes only.
@@ -137,6 +137,6 @@ class Wp_Swift_Testimonial_Cpt_Public {
 
 		//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wp-swift-testimonial-cpt-public.js', array( 'jquery' ), $this->version, false );
 
-	// }
+	}
 
 }

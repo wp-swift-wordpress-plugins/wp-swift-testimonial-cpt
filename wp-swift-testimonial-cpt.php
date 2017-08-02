@@ -101,7 +101,7 @@ require plugin_dir_path( __FILE__ ) . 'functions/_testimonial-title-placeholder.
  * @author 	 Gary Swift 
  * @since    1.0.0
  */
-require plugin_dir_path( __FILE__ ) . '_admin-menu.php';
+// require plugin_dir_path( __FILE__ ) . '_admin-menu.php';
 
 /**
  * Begins execution of the plugin.
