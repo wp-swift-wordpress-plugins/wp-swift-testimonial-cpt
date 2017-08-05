@@ -3,7 +3,7 @@ if( function_exists('acf_add_local_field_group') ):
 
 acf_add_local_field_group(array (
 	'key' => 'group_5702c29056caf',
-	'title' => 'Testimonial Additonal Fields',
+	'title' => 'Testimonial Additional Fields',
 	'fields' => array (
 		array (
 			'key' => 'field_570404a1dc20c',
