@@ -11,12 +11,22 @@
  * @package    Wp_Swift_Testimonial_Cpt
  * @subpackage Wp_Swift_Testimonial_Cpt/public/partials
  */
+function get_testimonial_organisation($id) {
+    if(get_field('organisation', $id)){
+        $organisation = get_field('organisation', $id);
+        if( get_field('website', $id) ) {
+            $website = get_field('website', $id);
+            $organisation = '<a href="'.$website.'" target="_blank">'.$organisation.'</a>';
+        }
+    } 
+    return $organisation;   
+}
 ob_start();
 wp_reset_query();
 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
 $args = array( 
     'post_type' => 'testimonial', 
-    'posts_per_page' => 8, 
+    'posts_per_page' => 10, 
     'paged' => $paged,
 );
 global $wp_query;
@@ -24,11 +34,40 @@ $wp_query = new WP_Query($args);
 if ( have_posts() ) : ?>
 
     <?php 
-    while ( have_posts() ) : the_post(); ?>
-    
-        <div class="testimonial">
+    $class = 'odd';  
+    while ( have_posts() ) : 
+
+        the_post(); 
+        $id = get_the_id(); 
+        $class = ($class == 'even' ? 'odd' : 'even'); 
+
+        ?><div class="testimonial <?php echo $class ?>">
+            <?php if ($class==='odd'): ?>
+                <i class="fa fa-quote-left icon"></i>
+            <?php elseif ($class==='even') : ?>
+                <i class="fa fa-quote-right icon"></i>
+            <?php endif ?>
+            <pre><?php //echo $class ?></pre>
             <div class="testimonial-content"><?php the_content();?></div>
-            <h5 class="testimonial-header"><?php the_title() ?></h5>
+            <div class="testimonial-meta">
+                <div class="testimonial-header"><?php the_title() ?></div>
+                <?php 
+                    $pos_org='';
+                    if(get_field('position', $id)){
+                        $pos_org = get_field('position', $id);
+                    }
+                    if(get_field('organisation', $id)){
+                        if($pos_org){
+                            $pos_org .= ', '.get_testimonial_organisation($id);
+                        }
+                        else {
+                            $pos_org = get_testimonial_organisation($id);
+                        }
+                    }
+                    if ($pos_org): ?>
+                        <div class="testimonial-position-organisation"><?php echo $pos_org ?></div>
+                    <?php endif ?>
+            </div><!-- @end .testimonial-meta -->
             <div class="clearfix"></div>
         </div>
 

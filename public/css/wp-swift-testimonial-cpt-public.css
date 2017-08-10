@@ -2,6 +2,39 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
-body {
-	background-color: #BAF0B3;
-}
+/* @start testimonials page */
+.testimonial {
+  background-color: rgba(0, 129, 143, 0.05);
+  padding: 20px;
+  margin-bottom: 40px; }
+  .testimonial .icon {
+    color: #00818F;
+    font-size: 60px;
+    padding-bottom: 10px; }
+  .testimonial .testimonial-content {
+    font-size: 105%; }
+  .testimonial .testimonial-meta {
+    padding-top: 15px;
+    clear: all;
+    border-top: 1px solid rgba(0, 129, 143, 0.5); }
+  .testimonial .testimonial-header {
+    font-size: 125%;}
+  .testimonial .testimonial-position-organisation {
+    font-style: italic;
+    font-weight: bold; }
+
+.testimonial.even {
+  border-left: 3px solid #00818F; }
+  .testimonial.even .testimonial-meta {
+    text-align: right; }
+  .testimonial.even .icon {
+    padding-left: 10px;
+    float: right; }
+
+.testimonial.odd {
+  border-right: 3px solid #00818F; }
+  .testimonial.odd .icon {
+    padding-right: 10px;
+    float: left; }
+
+/* @end testimonials page */
