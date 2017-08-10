@@ -89,9 +89,10 @@ class Wp_Swift_Testimonial_Cpt_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		//wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-swift-testimonial-cpt-public.css', array(), $this->version, 'all' );
-
+		$options = get_option( 'wp_swift_testimonial_cpt_settings' );
+		if (isset($options['wp_swift_testimonial_cpt_checkbox_load_css'])) {
+			wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-swift-testimonial-cpt-public.css', array(), $this->version, 'all' );
+		}
 	}
 
 	/**
@@ -139,4 +140,30 @@ class Wp_Swift_Testimonial_Cpt_Public {
 
 	}
 
+}
+/*
+ * Fucntion that does the samething as the shortcode
+ */
+function wp_swift_testimonials_func( $atts ) {
+    // $a = shortcode_atts( array(
+    //     'foo' => 'something',
+    //     'bar' => 'something else',
+    // ), $atts );
+    // return "foo = {$a['foo']}";
+    $html='';
+	require_once plugin_dir_path( __FILE__ ) . 'partials/wp-swift-testimonial-cpt-public-display.php';
+	return $html;
+}
+/*
+ * Helper function that can wrap the organisation in a link
+ */
+function wp_swift_get_testimonial_organisation($id) {
+    if(get_field('organisation', $id)){
+        $organisation = get_field('organisation', $id);
+        if( get_field('website', $id) ) {
+            $website = get_field('website', $id);
+            $organisation = '<a href="'.$website.'" target="_blank">'.$organisation.'</a>';
+        }
+    } 
+    return $organisation;   
 }

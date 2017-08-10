@@ -101,7 +101,12 @@ require plugin_dir_path( __FILE__ ) . 'functions/_testimonial-title-placeholder.
  * @author 	 Gary Swift 
  * @since    1.0.0
  */
-// require plugin_dir_path( __FILE__ ) . '_admin-menu.php';
+function wp_swift_testimonial_cpt_admin_menu() {
+	if( current_user_can('editor') || current_user_can('administrator') ) {
+		require plugin_dir_path( __FILE__ ) . '_admin-menu.php';
+	}
+}
+add_action( 'init', 'wp_swift_testimonial_cpt_admin_menu' );
 
 /**
  * Begins execution of the plugin.

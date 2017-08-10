@@ -4,11 +4,11 @@
  */
 /* @start testimonials page */
 .testimonial {
-  background-color: rgba(0, 129, 143, 0.05);
+  background-color: #fbfbfb;
   padding: 20px;
   margin-bottom: 40px; }
   .testimonial .icon {
-    color: #00818F;
+    color: #a0a0a0;
     font-size: 60px;
     padding-bottom: 10px; }
   .testimonial .testimonial-content {
@@ -16,7 +16,7 @@
   .testimonial .testimonial-meta {
     padding-top: 15px;
     clear: all;
-    border-top: 1px solid rgba(0, 129, 143, 0.5); }
+    border-top: 1px solid #c4c4c4; }
   .testimonial .testimonial-header {
     font-size: 125%;}
   .testimonial .testimonial-position-organisation {
@@ -24,7 +24,7 @@
     font-weight: bold; }
 
 .testimonial.even {
-  border-left: 3px solid #00818F; }
+  border-left: 3px solid #a0a0a0; }
   .testimonial.even .testimonial-meta {
     text-align: right; }
   .testimonial.even .icon {
@@ -32,7 +32,7 @@
     float: right; }
 
 .testimonial.odd {
-  border-right: 3px solid #00818F; }
+  border-right: 3px solid #a0a0a0; }
   .testimonial.odd .icon {
     padding-right: 10px;
     float: left; }

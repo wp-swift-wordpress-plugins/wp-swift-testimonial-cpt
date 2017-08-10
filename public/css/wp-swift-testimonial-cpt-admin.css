@@ -2,9 +2,10 @@
  * Admin style
  */
 th.column-pos_org, td.column-pos_org {
-	width: 150px;
+	max-width: 250px;
 }
 
 th.column-testimonial_content, td.column-testimonial_content {
-	width: 550px;
+	width: 50%;
+	max-width: 550px;
 }

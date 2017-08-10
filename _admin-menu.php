@@ -15,42 +15,94 @@ function wp_swift_testimonial_cpt_add_admin_menu(  ) {
     }
 }
 
-
 function wp_swift_testimonial_cpt_settings_init(  ) { 
 
-	register_setting( 'pluginPage', 'wp_swift_testimonial_cpt_settings' );
+	/*
+	 * Settings page
+	 */
+	register_setting( 'settings_page', 'wp_swift_testimonial_cpt_settings' );
 
 	add_settings_section(
-		'wp_swift_testimonial_cpt_pluginPage_section', 
+		'wp_swift_testimonial_cpt_settings_page_section', 
 		__( 'Settings Page', 'wp-swift-testimonial-cpt' ), 
 		'wp_swift_testimonial_cpt_settings_section_callback', 
-		'pluginPage'
+		'settings_page'
 	);
 
 	add_settings_field( 
-		'wp_swift_testimonial_cpt_select_field_show_method', 
-		__( 'Show Method', 'wp-swift-testimonial-cpt' ), 
-		'wp_swift_testimonial_cpt_select_field_show_method_render', 
-		'pluginPage', 
-		'wp_swift_testimonial_cpt_pluginPage_section' 
+		'wp_swift_testimonial_cpt_checkbox_load_css', 
+		__( 'Load Public CSS', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_checkbox_load_css_render', 
+		'settings_page', 
+		'wp_swift_testimonial_cpt_settings_page_section' 
 	);
 
 	add_settings_field( 
-		'wp_swift_testimonial_cpt_select_field_page', 
-		__( 'Select Page', 'wp-swift-testimonial-cpt' ), 
-		'wp_swift_testimonial_cpt_select_field_page_render', 
-		'pluginPage', 
-		'wp_swift_testimonial_cpt_pluginPage_section' 
+		'wp_swift_testimonial_cpt_checkbox_supports', 
+		__( 'CPT Support', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_checkbox_supports_render', 
+		'settings_page', 
+		'wp_swift_testimonial_cpt_settings_page_section' 
 	);
 
+	add_settings_field( 
+		'wp_swift_testimonial_cpt_checkbox_markup', 
+		__( 'Extra Markup', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_checkbox_markup_render', 
+		'settings_page', 
+		'wp_swift_testimonial_cpt_settings_page_section' 
+	);
 	// add_settings_field( 
-	// 	'wp_swift_testimonial_cpt_checkbox_field_1', 
-	// 	__( 'Settings field description', 'wp-swift-testimonial-cpt' ), 
-	// 	'wp_swift_testimonial_cpt_checkbox_field_1_render', 
-	// 	'pluginPage', 
-	// 	'wp_swift_testimonial_cpt_pluginPage_section' 
+	// 	'wp_swift_testimonial_cpt_select_field_show_method', 
+	// 	__( 'Show Method', 'wp-swift-testimonial-cpt' ), 
+	// 	'wp_swift_testimonial_cpt_select_field_show_method_render', 
+	// 	'settings_page', 
+	// 	'wp_swift_testimonial_cpt_settings_page_section' 
 	// );
 
+	// add_settings_field( 
+	// 	'wp_swift_testimonial_cpt_select_field_page', 
+	// 	__( 'Select Page', 'wp-swift-testimonial-cpt' ), 
+	// 	'wp_swift_testimonial_cpt_select_field_page_render', 
+	// 	'settings_page', 
+	// 	'wp_swift_testimonial_cpt_settings_page_section' 
+	// );
+
+	/*
+	 * Help page
+	 */
+	register_setting( 'help_page', 'wp_swift_testimonial_cpt_help' );
+
+	add_settings_section(
+		'wp_swift_testimonial_cpt_help_page_section', 
+		__( 'Help Page', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_help_section_callback', 
+		'help_page'
+	);
+
+	add_settings_field( 
+		'wp_swift_testimonial_cpt_help_shortcode', 
+		__( 'Shortcodes', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_help_shortcode_render', 
+		'help_page', 
+		'wp_swift_testimonial_cpt_help_page_section' 
+	);
+
+	add_settings_field( 
+		'wp_swift_testimonial_cpt_help_php_function', 
+		__( 'PHP Code', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_help_php_function_render', 
+		'help_page', 
+		'wp_swift_testimonial_cpt_help_page_section' 
+	);	
+
+	add_settings_field( 
+		'wp_swift_testimonial_cpt_help_sass_function', 
+		__( 'Sass Code', 'wp-swift-testimonial-cpt' ), 
+		'wp_swift_testimonial_cpt_help_sass_function_render', 
+		'help_page', 
+		'wp_swift_testimonial_cpt_help_page_section' 
+	);		
 }
 
 
@@ -66,9 +118,7 @@ function wp_swift_testimonial_cpt_select_field_page_render(  ) {
 	<select name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_select_field_page]'>
 		<?php foreach ($posts_array as $key => $post): ?>
 			<option value="<?php echo $post->ID; ?>" <?php 
-			// selected( $options['wp_swift_testimonial_cpt_select_field_page'], $post->ID ); 
-			is_select_set('wp_swift_testimonial_cpt_select_field_page', $options, $post->ID);
-
+				is_select_set('wp_swift_testimonial_cpt_select_field_page', $options, $post->ID);
 			?>><?php echo $post->post_title; ?></option>
 		<?php endforeach ?>
 	</select>
@@ -99,38 +149,153 @@ function wp_swift_testimonial_cpt_select_field_show_method_render(  ) {
 <?php
 
 }
-function wp_swift_testimonial_cpt_checkbox_field_1_render(  ) { 
+function wp_swift_testimonial_cpt_checkbox_load_css_render(  ) { 
 
 	$options = get_option( 'wp_swift_testimonial_cpt_settings' );
 	?>
-	<input type='checkbox' name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_field_1]' <?php checked( $options['wp_swift_testimonial_cpt_checkbox_field_1'], 1 ); ?> value='1'>
+	<input type="checkbox" value="1" name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_load_css]' <?php 
+		if (isset($options['wp_swift_testimonial_cpt_checkbox_load_css'])) {
+			checked( $options['wp_swift_testimonial_cpt_checkbox_load_css'], 1 ); 
+		}
+		?>><small>Use the plugin to load a CSS file.</small>
 	<?php
+}
+function wp_swift_testimonial_cpt_checkbox_supports_render( ) { 
 
+	$options = get_option( 'wp_swift_testimonial_cpt_settings' );
+	?>
+	<input type="checkbox" value="1" name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_support_featured_image]' <?php 
+		if (isset($options['wp_swift_testimonial_cpt_checkbox_support_featured_image'])) {
+			checked( $options['wp_swift_testimonial_cpt_checkbox_support_featured_image'], 1 ); 
+		}
+		?>><label for="wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_support_featured_image]">Featured Image</label>
+	<br>
+	<input type="checkbox" value="1" name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_support_excerpt]' <?php 
+		if (isset($options['wp_swift_testimonial_cpt_checkbox_support_excerpt'])) {
+			checked( $options['wp_swift_testimonial_cpt_checkbox_support_excerpt'], 1 ); 
+		}
+		?>><label for="wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_support_excerpt]">Excerpt</label>
+	<?php
+}
+function wp_swift_testimonial_cpt_checkbox_markup_render( ) {
+
+	$options = get_option( 'wp_swift_testimonial_cpt_settings' );
+	?>
+	<input type="checkbox" value="1" name='wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_markup_icon]' <?php 
+		if (isset($options['wp_swift_testimonial_cpt_checkbox_markup_icon'])) {
+			checked( $options['wp_swift_testimonial_cpt_checkbox_markup_icon'], 1 ); 
+		}
+	?>><label for="wp_swift_testimonial_cpt_settings[wp_swift_testimonial_cpt_checkbox_markup_icon]">Show Quote Icon</label><?php
+}
+function wp_swift_testimonial_cpt_help_shortcode_render( ) { 
+?>
+<pre class="prettyprint custom">
+// WordPress shortcode
+
+[testimonials]
+</pre>
+<?php
 }
 
+
+function wp_swift_testimonial_cpt_help_php_function_render(  ) { 
+?>
+<pre class="prettyprint lang-php custom">
+// Render the testimonials
+
+if (function_exists('wp_swift_testimonials_func')) {
+  echo wp_swift_testimonials_func();
+}
+</pre>
+<?php
+}
+
+function wp_swift_testimonial_cpt_help_sass_function_render(  ) { 
+?>
+<p>Sample sass code</p>
+<pre class="prettyprint lang-scss custom">
+.testimonial {
+	background-color: rgba($primary-color, 0.05);
+	padding: 20px;
+	margin-bottom: 40px;
+	.icon {
+		color: $primary-color;
+		font-size: 60px;
+		padding-bottom: 10px;
+	}
+	.testimonial-content {
+		font-size: 105%;
+	}	
+	.testimonial-meta {
+		padding-top: 15px;
+		clear: all;
+		border-top: 1px solid rgba($primary-color, 0.5);
+
+	}
+	.testimonial-header {
+		font-size: 125%;
+		font-family: $header-font-family;
+	}
+	.testimonial-position-organisation {
+		font-style: italic;
+		font-weight: bold;
+	}
+}
+.testimonial.even {
+	border-left: 3px solid $primary-color;
+	.testimonial-meta {
+		text-align: right;
+	}
+	.icon {
+		padding-left: 10px;
+		float: right;
+	}
+}
+.testimonial.odd {
+	border-right: 3px solid $primary-color;
+	.icon {
+		padding-right: 10px;
+		float: left;
+	}
+}
+</pre>
+<?php
+}
 
 function wp_swift_testimonial_cpt_settings_section_callback(  ) { 
 
 	echo __( 'WordPress custom post type for testimonials.', 'wp-swift-testimonial-cpt' );
 
 }
-
-
+function wp_swift_testimonial_cpt_help_section_callback(  ) { 
+	?><p>To render the <b>Testimonials</b> onto a webpage there are two options: PHP code and WordPress <a href="https://codex.wordpress.org/Shortcode" target="_blank">Shortcodes</a>.</p><?php
+}
 function wp_swift_testimonial_cpt_options_page(  ) { 
-$options = get_option( 'wp_swift_testimonial_cpt_settings' );
-echo "<pre>"; var_dump($options); echo "</pre>";
-	?>
-	<form action='options.php' method='post'>
+?><div id="wp-swift-testimonial-cpt-options-page" class="wrap">
 
-		<h2>WP Swift: Testimonials CPT</h2>
+	<h1>WP Swift: Testimonials CPT</h1>
+
+	<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'settings_page'; ?>
+
+	<h2 class="nav-tab-wrapper">
+	    <a href="?page=wp_swift_testimonials_cpt&tab=settings_page" class="nav-tab <?php echo $active_tab == 'settings_page' ? 'nav-tab-active' : ''; ?>">Settings</a>
+	    <a href="?page=wp_swift_testimonials_cpt&tab=help_page" class="nav-tab <?php echo $active_tab == 'help_page' ? 'nav-tab-active' : ''; ?>">Help Page</a>
+	</h2>
 
 		<?php
-		settings_fields( 'pluginPage' );
-		do_settings_sections( 'pluginPage' );
-		submit_button();
+			if ($active_tab == 'settings_page') {
+				echo "<form action='options.php' method='post'>";
+				settings_fields( 'settings_page' );
+				do_settings_sections( 'settings_page' );
+				submit_button();
+				echo "</form>";
+			}
+			elseif ($active_tab == 'help_page'){
+				
+				settings_fields( 'help_page' );
+				do_settings_sections( 'help_page' );
+				
+			}
 		?>
-
-	</form>
-	<?php
-
+</div><!-- @end #wp-swift-testimonial-cpt-options-page --><?php
 }
