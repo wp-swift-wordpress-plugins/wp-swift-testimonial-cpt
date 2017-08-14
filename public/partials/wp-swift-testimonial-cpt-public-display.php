@@ -28,16 +28,24 @@ if (isset($options['wp_swift_testimonial_cpt_checkbox_markup_icon'])) {
 global $wp_query;
 $wp_query = new WP_Query($args);
 if ( have_posts() ) :
-
-    $class = 'odd';  
+    $count = 0;
+    $class = 'odd';
+     
     while ( have_posts() ) : 
 
         the_post(); 
         $id = get_the_id(); 
+        $count++;
         $class = ($class == 'even' ? 'odd' : 'even'); 
-
-        ?><div class="testimonial <?php echo $class ?> testimonial-cpt-<?php echo $id ?>">
-
+        $count_class = ''; 
+        if ($count === 1) {
+            $count_class .= ' first';
+        }
+        elseif ($count === $wp_query->post_count) {
+            $count_class .= ' last';
+        }
+        ?><div class="testimonial <?php echo $class; echo $count_class; ?> testimonial-cpt-<?php echo $id ?>">
+            
             <?php if ($wp_swift_testimonial_cpt_checkbox_markup_icon): ?>
                 <?php if ($class==='odd'): ?>
                     <i class="fa fa-quote-left icon"></i>
