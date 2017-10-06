@@ -35,8 +35,8 @@ if ( have_posts() ) :
 
         the_post(); 
         $id = get_the_id(); 
+        $class = ($count % 2 == 0 ? 'odd' : 'even'); 
         $count++;
-        $class = ($class == 'even' ? 'odd' : 'even'); 
         $count_class = ''; 
         if ($count === 1) {
             $count_class .= ' first';
@@ -54,7 +54,7 @@ if ( have_posts() ) :
                 <?php endif ?>
             <?php endif ?>
 
-            <div class="testimonial-content"><?php 
+            <div class="testimonial-content"><?php
                 the_content();
             ?></div><!-- @end .testimonial-content -->
 
